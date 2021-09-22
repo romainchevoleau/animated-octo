@@ -59,14 +59,27 @@ function Ground(color, size_x, size_y, nb_tile)
                 scene.add(tmpGround);
             }
             else
-                noGround.push([x, y]);
+            {
+                if (x == 60 && y == 0)
+                {
+                    color = 0xff0000;
+                    tmpGround = new THREE.Mesh(
+                        new THREE.PlaneGeometry(sizeOfTileX-10, sizeOfTileY-10),
+                        new THREE.MeshLambertMaterial({color: color, transparent: true, opacity: 0.6}));
+                        tmpGround.position.x = x;
+                        tmpGround.position.y = y;
+                        scene.add(tmpGround);
+                }
+                else
+                    noGround.push([x, y]);
+            }
         }
     }
 }
 
 function Light(name, color, position)
 {
-    pointLight = new THREE.PointLight(color, 50, 350);
+    pointLight = new THREE.PointLight(color, HEIGHT, WIDTH);
 
     pointLight.position.x = position.split(',')[0];
     pointLight.position.y = position.split(',')[1];

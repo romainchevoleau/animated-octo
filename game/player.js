@@ -20,6 +20,18 @@ var Player = function(name, color, position, direction) {
     this.graphic.rotateOnAxis(new THREE.Vector3(0,0,1), this.direction+(3*Math.PI/2));
 };
 
+Player.prototype.lostlife = function () {
+    this.life = this.life - 1;
+    jQuery('#'+this.name+' >.life').text(this.life);
+    this.position.x = 50;
+    this.position.y = 0;
+    if (this.life == 0)
+    {
+        //console.log("viseau" + this.graphic.position.x + " " + this.graphic.position.y)
+        this.dead();
+    }
+}
+
 Player.prototype.dead = function () {
     this.graphic.position.z = this.graphic.position.z-0.1;
         //Nettoyage de la div container
@@ -51,8 +63,8 @@ Player.prototype.displayInfo = function () {
 }
 
 Player.prototype.turnRight = function (angle) {
-    this.direction += angle;
-    this.graphic.rotateOnAxis(new THREE.Vector3(0,0,1), +angle);
+    this.direction -= angle;
+    this.graphic.rotateOnAxis(new THREE.Vector3(0,0,-1), angle);
 };
 
 Player.prototype.turnLeft = function (angle) {
@@ -79,7 +91,7 @@ Player.prototype.move = function () {
     this.graphic.position.x = this.position.x;
     this.graphic.position.y = this.position.y;
     
-    light1.position.x = this.position.x;
-    light1.position.y = this.position.y;
+    //light1.position.x = this.position.x;
+    //light1.position.y = this.position.y;
    //light1.position.z = this.graphic.position.z + 500;
 };
